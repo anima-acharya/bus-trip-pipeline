@@ -22,7 +22,7 @@ def fetch_bus_data(limit=35000) -> pd.DataFrame:
     df = pd.DataFrame.from_records(records)
 
     if df.empty:
-        print("⚠️ No data found from API.")
+        print("No data found from API.")
         return df
 
     df.columns = [c.strip().replace(" ", "_").lower() for c in df.columns]
@@ -33,6 +33,6 @@ def fetch_bus_data(limit=35000) -> pd.DataFrame:
     df["year_month"] = datetime.now().strftime("%Y-%m")
 
     # print first few rows for debugging
-    print("✅ Data fetched successfully.")
+    print("Data fetched successfully.")
 
     return df

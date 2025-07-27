@@ -32,25 +32,7 @@ def ensure_iceberg_table():
         schema=ICEBERG_DB
     )
     cur = conn.cursor()
-    # cur.execute("DROP TABLE IF EXISTS bus_trip_db.raw_bus_trip_counts")
-
-    # # Create schema and table if needed
-    # cur.execute(f"CREATE SCHEMA IF NOT EXISTS {ICEBERG_DB} WITH (location = '{S3_BASE_PATH}/')")
-    # cur.execute(f"""
-    #     CREATE TABLE IF NOT EXISTS {ICEBERG_FULL_NAME} (
-    #         id VARCHAR,
-    #         year_month VARCHAR,
-    #         bus_region VARCHAR,
-    #         card_type VARCHAR,
-    #         trips INTEGER
-    #     )
-    #     WITH (
-    #         format = 'PARQUET',
-    #         partitioning = ARRAY['year_month'],
-    #         location = '{S3_BASE_PATH}/'
-    #     )
-    # """)
-
+ 
     # Create schema and table if needed
     cur.execute(f"CREATE SCHEMA IF NOT EXISTS {ICEBERG_DB} WITH (location = '{S3_BASE_PATH}/')")
     cur.execute(f"""
@@ -68,7 +50,7 @@ def ensure_iceberg_table():
     """)
 
 
-    print(f"✅ Iceberg table ensured: {ICEBERG_FULL_NAME}")
+    print(f"Iceberg table ensured: {ICEBERG_FULL_NAME}")
 
 def write_parquet(df, year_month):
     local_dir = tempfile.mkdtemp()
@@ -82,13 +64,13 @@ def upload_to_s3(local_path, year_month, filename):
     s3_key = f"bus_trips/raw/year_month={year_month}/{filename}"
     s3 = boto3.client("s3", region_name=REGION)
     s3.upload_file(local_path, S3_BUCKET, s3_key)
-    print(f"✅ Uploaded to s3://{S3_BUCKET}/{s3_key}")
+    print(f"Uploaded to s3://{S3_BUCKET}/{s3_key}")
     return f"{S3_BASE_PATH}/year_month={year_month}/{filename}"
 
 def insert_into_iceberg(df):
     # take only first 100 rows of the dataframe
     df = df.head(10)
-    print("⏳ Inserting rows into Iceberg table via Trino...")
+    print("Inserting rows into Iceberg table via Trino...")
     conn = connect(
         host=TRINO_HOST,
         port=TRINO_PORT,
@@ -112,9 +94,7 @@ def insert_into_iceberg(df):
         """
         cur.execute(insert_sql)
 
-    print(f"✅ Inserted {len(df)} rows into {ICEBERG_FULL_NAME}")
-
-
+    print(f"Inserted {len(df)} rows into {ICEBERG_FULL_NAME}")
 
 def main():
     df = fetch_bus_data()
@@ -124,9 +104,6 @@ def main():
     year_month = df["year_month"].iloc[0]
     ensure_iceberg_table()
     insert_into_iceberg(df)
-
-    # local_path, filename = write_parquet(df, year_month)
-    # upload_to_s3(local_path, year_month, filename)
 
     print("\n Done. Data exported to Iceberg.\n")
     print(f"→ Trino query: SELECT * FROM {ICEBERG_FULL_NAME} LIMIT 10;")
