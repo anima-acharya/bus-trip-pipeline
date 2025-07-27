@@ -3,7 +3,6 @@ MODEL (
  kind INCREMENTAL_BY_TIME_RANGE (
  time_column year_month
  ),
---  gateway snowflake,
 );
 
 SELECT

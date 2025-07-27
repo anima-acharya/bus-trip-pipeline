@@ -33,4 +33,4 @@ jobs:
     - name: Run sqlmesh plan
       run: sqlmesh plan --no-prompts
     - name: Run tests
-      run: sqlmesh test --no-prompts
+      run: sqlmesh test

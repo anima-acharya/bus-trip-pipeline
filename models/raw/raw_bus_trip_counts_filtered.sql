@@ -1,7 +1,6 @@
 MODEL (
  name bus_trip_db.raw_bus_trip_counts_filtered,
  kind FULL,
---  gateway snowflake,
 );
 
 SELECT
