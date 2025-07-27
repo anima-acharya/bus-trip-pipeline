@@ -21,10 +21,6 @@ jobs:
         pip install -r requirements.txt
     - name: Set environment variables from secrets
       run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}"
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-        echo "AWS_REGION=${{ secrets.AWS_REGION }}"
-        echo "S3_BUCKET_NAME=${{ secrets.S3_BUCKET_NAME }}"
         echo "SNOWFLAKE_ACCOUNT=${{ secrets.SNOWFLAKE_ACCOUNT }}" 
         echo "SNOWFLAKE_USER=${{ secrets.SNOWFLAKE_USER }}"
         echo "SNOWFLAKE_PASSWORD=${{ secrets.SNOWFLAKE_PASSWORD }}"

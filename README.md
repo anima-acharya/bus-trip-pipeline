@@ -115,24 +115,8 @@ sqlmesh test
 
 ---
 
-## 🛠️ Troubleshooting
-
-- **Missing Iceberg Schema Location:**  
-  Create schema manually in Trino CLI if needed:
-  ```sql
-  CREATE SCHEMA IF NOT EXISTS iceberg.sqlmesh__nsw_incidents_db
-  WITH (location = 's3://your-bucket/sqlmesh/nsw_incidents_db/');
-  ```
-- **AWS Credentials:**  
-  Ensure `.env` is set and containers restarted after changes.
-- **Glue Catalog Permissions:**  
-  IAM user/role must allow Glue and S3 operations.
-
----
-
 ## 📚 Resources
 
 - [Apache Iceberg Documentation](https://iceberg.apache.org/docs/latest/)
 - [Trino Documentation](https://trino.io/docs/current/)
 - [SQLMesh Documentation](https://sqlmesh.readthedocs.io/)
-- [AWS Glue Catalog Guide](https://docs.aws.amazon.com/glue/latest/dg/catalog-and-crawler.html)
