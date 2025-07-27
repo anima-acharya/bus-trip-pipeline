@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ "prod" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Set environment variables from secrets
+      run: |
+        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}"
+        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        echo "AWS_REGION=${{ secrets.AWS_REGION }}"
+        echo "S3_BUCKET_NAME=${{ secrets.S3_BUCKET_NAME }}"
+        echo "SNOWFLAKE_ACCOUNT=${{ secrets.SNOWFLAKE_ACCOUNT }}" 
+        echo "SNOWFLAKE_USER=${{ secrets.SNOWFLAKE_USER }}"
+        echo "SNOWFLAKE_PASSWORD=${{ secrets.SNOWFLAKE_PASSWORD }}"
+        echo "SNOWFLAKE_WAREHOUSE=${{ secrets.SNOWFLAKE_WAREHOUSE }}"
+        echo "SNOWFLAKE_DATABASE=${{ secrets.SNOWFLAKE_DATABASE }}"
+    - name: Run sqlmesh plan
+      run: sqlmesh plan --no-prompts
+    - name: Run tests
+      run: sqlmesh test --no-prompts

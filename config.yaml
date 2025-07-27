@@ -1,0 +1,36 @@
+gateways:
+  iceberg_trino:
+    connection:
+      type: trino
+      host: localhost
+      port: 8080
+      user: trino
+      catalog: iceberg
+      http_scheme: http
+    state_connection:
+      type: duckdb
+      database: sqlmesh_state.db 
+  snowflake:
+    connection:
+      type: snowflake
+      account: {{env_var('SNOWFLAKE_ACCOUNT')}}
+      user: {{env_var('SNOWFLAKE_USER')}}
+      password: {{env_var('SNOWFLAKE_PASSWORD')}}
+      warehouse: {{env_var('SNOWFLAKE_WAREHOUSE')}}
+      database: {{env_var('SNOWFLAKE_DATABASE')}}
+
+default_gateway: iceberg_trino
+gateway_managed_virtual_layer: true
+
+model_defaults:
+  dialect: trino
+  start: 2025-01-01
+  # storage_format: PARQUET
+  # on_destructive_change: allow
+
+# model_naming:
+#   infer_names: true
+
+# plan:
+#   auto_apply: true
+#   no_prompts: true
