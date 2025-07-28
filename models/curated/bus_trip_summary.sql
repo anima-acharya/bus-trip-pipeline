@@ -3,7 +3,6 @@ MODEL (
  kind INCREMENTAL_BY_TIME_RANGE (
  time_column year_month
  ),
- gateway snowflake,
 );
 
 SELECT
@@ -11,7 +10,7 @@ SELECT
  bus_region,
  card_type,
  SUM(trips) AS total_trips
-FROM iceberg_trino.raw.raw_bus_trip_counts_filtered
+FROM bus_trip_db.raw_bus_trip_counts_filtered
 WHERE trips > 1
 GROUP BY
  year_month,
