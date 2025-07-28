@@ -27,6 +27,6 @@ jobs:
         echo "SNOWFLAKE_WAREHOUSE=${{ secrets.SNOWFLAKE_WAREHOUSE }}"
         echo "SNOWFLAKE_DATABASE=${{ secrets.SNOWFLAKE_DATABASE }}"
     - name: Run sqlmesh plan
-      run: sqlmesh plan --no-prompts
+      run: yes | sqlmesh plan
     - name: Run tests
       run: sqlmesh test

@@ -42,7 +42,7 @@ This project fetches NSW bus trip data, stores it in S3 using Iceberg tables, an
 - AWS Account with S3 access
 - Python 3.8+
 - SQLMesh CLI
-- Snowflake Account (optional)
+- Snowflake Account
 
 ---
 

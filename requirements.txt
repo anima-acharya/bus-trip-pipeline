@@ -11,4 +11,3 @@ snowflake-sqlalchemy
 
 # SQLMesh
 sqlmesh[trino]  # includes CLI and testing tools
-# sqlmesh[snowflake]  # includes Snowflake support
