@@ -9,4 +9,4 @@ SELECT
  card_type,
  trips
 FROM iceberg.bus_trip_db.raw_bus_trip_counts
-WHERE trips > 1;
+ trips > 1;
